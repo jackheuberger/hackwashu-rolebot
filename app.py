@@ -13,6 +13,7 @@ class MyClient(discord.Client):
         for line in lines:
             line = line.replace("\n","")
             self.users.append(line)
+        f.close()
         self.users.append("Jackwustl#2373")
         print('Logged on as', self.user)
 
@@ -25,12 +26,11 @@ class MyClient(discord.Client):
 
         if str(member) in self.users:
             try:
-                await member.remove_roles(unverified, atomic=False)
+                await member.remove_roles(unverified, atomic=True)
                 hasRole = unverified in member.roles
                 # If after remove_role the user still has unverified, request manual verification
                 if hasRole:
-                    await member.send("You haven't been automatically verified, but that's ok! I sent the exec team a message and they'll verify you shortly. Welcome to Hack WashU!" + 
-                    " If you end up having full access to this server, then you're all set! Shoutout to")
+                    await member.send("You haven't been automatically verified, but that's ok! I sent the exec team a message and they'll verify you shortly. Welcome to Hack WashU!")
                     await admin.send("Need to verify " + str(member))
                 else:
                     print("Verified", str(member))
